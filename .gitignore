@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Expo / React Native
+.expo/
+.expo-shared/
+.gradle/
+*.jks
+*.keystore
+*.pem
+*.p12
+*.key
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Secrets and credentials
+.secrets/
+credentials/
+google-services.json
+GoogleService-Info.plist
+
+# Firebase
+firebase/functions/.env
+firebase/functions/lib/
+firebase/functions/node_modules/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
+
+# Testing
+coverage/
+.nyc_output/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Misc
+apps/mobile/expo-qr.html
+apps/mobile/qrcode.html
+apps/mobile/qr_data.txt

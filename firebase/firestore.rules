@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() { return request.auth != null; }
+    function userRole() { return request.auth.token.role; }
+    function isOwner(shopId) { return userRole() == 'dono' && request.auth.token.shopId == shopId; }
+    function isStaff(shopId) { return userRole() == 'funcionario' && request.auth.token.shopId == shopId; }
+    function isCustomer() { return userRole() == 'cliente'; }
+
+    // ─── Usuários ─────────────────────────────────────
+    match /users/{uid} {
+      // Cada usuário pode ler/escrever seu próprio doc
+      allow read: if isSignedIn() && request.auth.uid == uid;
+      allow write: if isSignedIn() && request.auth.uid == uid;
+      // Dono e staff podem ler dados de usuários (para ver nomes de clientes)
+      allow read: if isSignedIn() && (userRole() == 'dono' || userRole() == 'funcionario');
+      // Cloud Functions podem escrever via admin SDK (bypass rules)
+
+      // Sub-coleção de notificações do usuário
+      match /notifications/{notifId} {
+        allow read: if isSignedIn() && request.auth.uid == uid;
+        allow write: if false; // Apenas Cloud Functions
+      }
+    }
+
+    // ─── Barbearias ───────────────────────────────────
+    match /barbershops/{shopId} {
+      allow read: if true;
+      allow write: if isOwner(shopId);
+      match /services/{serviceId} {
+        allow read: if true;
+        allow write: if isOwner(shopId);
+      }
+      match /staff/{userId} {
+        allow read: if isOwner(shopId) || isStaff(shopId);
+        allow write: if isOwner(shopId);
+      }
+      match /appointments/{appointmentId} {
+        allow read: if isOwner(shopId) || isStaff(shopId) || (isCustomer() && request.auth.uid == resource.data.customerUid);
+        // Criação e atualização somente por dono/funcionário (clientes usam Cloud Functions)
+        allow create, update, delete: if isOwner(shopId) || isStaff(shopId);
+      }
+      match /inventory/{itemId} {
+        allow read: if isOwner(shopId) || isStaff(shopId);
+        allow write: if isOwner(shopId);
+      }
+      match /promotions/{promoId} {
+        allow read: if true;
+        allow write: if isOwner(shopId);
+      }
+      match /loyalty/{customerUid} {
+        allow read: if isOwner(shopId) || request.auth.uid == customerUid;
+        allow write: if isOwner(shopId);
+      }
+      match /stories/{storyId} {
+        allow read: if true;
+        allow write: if isOwner(shopId);
+      }
+      match /chats/{roomId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn();
+        match /messages/{msgId} {
+          allow read: if isSignedIn();
+          allow create: if isSignedIn() && request.auth.uid == request.resource.data.fromUid;
+        }
+      }
+      match /invites/{token} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(shopId);
+      }
+    }
+
+    // OTP deve ser lido/escrito APENAS por Cloud Functions, não pelos clientes
+    match /otp/{phone} { 
+      allow read, write: if false; // Forçar uso via Cloud Functions
+    }
+    match /reminders/{id} { allow read, write: if false; } // Apenas Cloud Functions
+  }
+}

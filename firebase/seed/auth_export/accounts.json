@@ -1,0 +1,31 @@
+{
+  "kind": "identitytoolkit#DownloadAccountResponse",
+  "users": [
+    {
+      "localId": "demo-owner",
+      "displayName": "Dono Demo",
+      "email": "dono@demo.com",
+      "emailVerified": true,
+      "phoneNumber": "+5511999999999",
+      "customAttributes": "{\"role\": \"dono\", \"shopId\": \"demo-shop\"}",
+      "createdAt": "1700000000000",
+      "lastLoginAt": "1700000000000"
+    },
+    {
+      "localId": "demo-staff",
+      "displayName": "Barbeiro Demo",
+      "phoneNumber": "+5511888888888",
+      "customAttributes": "{\"role\": \"funcionario\", \"shopId\": \"demo-shop\"}",
+      "createdAt": "1700000000000",
+      "lastLoginAt": "1700000000000"
+    },
+    {
+      "localId": "demo-customer",
+      "displayName": "Cliente Demo",
+      "phoneNumber": "+5511777777777",
+      "customAttributes": "{\"role\": \"cliente\"}",
+      "createdAt": "1700000000000",
+      "lastLoginAt": "1700000000000"
+    }
+  ]
+}

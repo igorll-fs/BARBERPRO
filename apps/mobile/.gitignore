@@ -1,0 +1,33 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Secrets
+.secrets/
+*.pem
+*.key
+*.jks
+*.keystore
+
+# Build & Dependencies
+node_modules/
+dist/
+build/
+.expo/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/

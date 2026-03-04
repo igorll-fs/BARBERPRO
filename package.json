@@ -1,0 +1,10 @@
+{
+  "name": "barberpro-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "mobile": "cd apps/mobile && npx expo start",
+    "mobile:clear": "cd apps/mobile && npx expo start --clear",
+    "web": "cd apps/public-web && npm run dev"
+  }
+}

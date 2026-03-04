@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <rect width="180" height="180" rx="40" fill="#0f172a"/>
+  <g transform="translate(90,80) scale(0.35)" fill="none" stroke="#22c55e" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="-60" cy="80" rx="40" ry="50" transform="rotate(-15,-60,80)"/>
+    <ellipse cx="60" cy="80" rx="40" ry="50" transform="rotate(15,60,80)"/>
+    <line x1="-30" y1="40" x2="30" y2="-80"/>
+    <line x1="30" y1="40" x2="-30" y2="-80"/>
+  </g>
+  <text x="90" y="155" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="28" fill="#22c55e">PRO</text>
+</svg>

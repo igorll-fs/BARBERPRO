@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentação
+    url: https://github.com/seu-usuario/barberpro/tree/main/docs
+    about: Verifique a documentação antes de abrir uma issue
+  - name: 💬 Discussions
+    url: https://github.com/seu-usuario/barberpro/discussions
+    about: Use discussions para perguntas gerais e ideias

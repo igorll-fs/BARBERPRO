@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm test:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npx jest --clearCache)",
+      "Bash(npx eslint:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm start)",
+      "Bash(npx expo install @types/react)"
+    ]
+  }
+}

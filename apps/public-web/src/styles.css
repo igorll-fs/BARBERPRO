@@ -1,0 +1,182 @@
+/* ============================
+   BARBERPRO PWA — Estilos Globais
+   ============================ */
+:root {
+  --bg: #0A0E1A;
+  --bg-secondary: #131825;
+  --bg-tertiary: #1A202E;
+  --card: #1C2333;
+  --card-elevated: #232B3F;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --primary: #10B981;
+  --primary-dark: #059669;
+  --primary-light: #34D399;
+  --primary-bg: rgba(16, 185, 129, 0.15);
+  --danger: #F43F5E;
+  --danger-bg: rgba(244, 63, 94, 0.15);
+  --warning: #FBBF24;
+  --secondary: #3B82F6;
+  --gold: #F59E0B;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { color: var(--primary-light); }
+
+/* ─── Componentes Base ───────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--primary-dark); }
+.btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover:not(:disabled) { background: var(--card-elevated); }
+.btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+.btn-outline:hover:not(:disabled) { background: var(--primary-bg); }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-ghost { background: transparent; color: var(--text-secondary); }
+.btn-ghost:hover:not(:disabled) { color: var(--text); background: var(--bg-tertiary); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input:focus { border-color: var(--primary); }
+.input::placeholder { color: var(--text-muted); }
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ─── Layout ─────────────────────────────────────────── */
+.page {
+  min-height: 100dvh;
+  background: var(--bg);
+  padding: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center { text-align: center; }
+.text-muted { color: var(--text-secondary); }
+.text-sm { font-size: 13px; }
+.text-xs { font-size: 11px; }
+.mt-sm { margin-top: 8px; }
+.mt-md { margin-top: 12px; }
+.mt-lg { margin-top: 16px; }
+.mt-xl { margin-top: 24px; }
+.mb-sm { margin-bottom: 8px; }
+.mb-md { margin-bottom: 12px; }
+.mb-lg { margin-bottom: 16px; }
+.gap-sm { gap: 8px; }
+.gap-md { gap: 12px; }
+.gap-lg { gap: 16px; }
+
+/* ─── Bottom Navigation ──────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  z-index: 100;
+}
+.bottom-nav a, .bottom-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 12px;
+  min-width: 60px;
+  text-decoration: none;
+}
+.bottom-nav a.active, .bottom-nav button.active {
+  color: var(--primary);
+}
+.bottom-nav .nav-icon { font-size: 22px; }
+
+/* ─── Animações ──────────────────────────────────────── */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.fade-in { animation: fadeIn 0.3s ease; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ─── Textarea ───────────────────────────────────────── */
+textarea.input {
+  min-height: 80px;
+  line-height: 1.5;
+}

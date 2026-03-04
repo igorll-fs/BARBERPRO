@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint-and-test-mobile:
+    name: Lint & Test Mobile
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/mobile
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ./apps/mobile/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npx eslint . --ext .ts,.tsx --max-warnings=0
+        continue-on-error: true
+
+      - name: Run tests
+        run: npm test -- --coverage --passWithNoTests
+        env:
+          CI: true
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          files: ./apps/mobile/coverage/lcov.info
+          flags: mobile
+          name: mobile-coverage
+
+  lint-and-test-functions:
+    name: Lint & Test Functions
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./firebase/functions
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: ./firebase/functions/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Run tests
+        run: npm test -- --coverage --passWithNoTests
+        env:
+          CI: true
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          files: ./firebase/functions/coverage/lcov.info
+          flags: functions
+          name: functions-coverage
+
+  check-secrets:
+    name: Check for Secrets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for .env files
+        run: |
+          if find . -name ".env" -type f | grep -q .; then
+            echo "❌ ERROR: .env files should not be committed!"
+            find . -name ".env" -type f
+            exit 1
+          fi
+          echo "✅ No .env files found"
+
+      - name: Check for secrets directory
+        run: |
+          if [ -d "apps/mobile/.secrets" ]; then
+            echo "⚠️ WARNING: .secrets directory exists. Ensure it's in .gitignore!"
+            cat .gitignore | grep -q ".secrets" && echo "✅ .secrets is in .gitignore" || echo "❌ .secrets NOT in .gitignore!"
+          fi
+
+      - name: Secret Detection
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ""
+          head: HEAD
+          extra_args: --debug --only-verified

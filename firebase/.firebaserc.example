@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "seu-projeto-firebase",
+    "production": "seu-projeto-firebase",
+    "staging": "seu-projeto-firebase-staging"
+  }
+}

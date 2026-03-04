@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "BarberPro",
+    "slug": "barberpro",
+    "version": "1.0.0",
+    "scheme": "barberpro",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.barberpro.mobile",
+      "usesAppleSignIn": true
+    },
+    "android": {
+      "package": "app.barberpro.mobile"
+    },
+    "plugins": [
+      [
+        "expo-notifications"
+      ],
+      [
+        "expo-localization"
+      ],
+      [
+        "expo-image-picker"
+      ],
+      "expo-secure-store"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      },
+      "FIREBASE_API_KEY": "",
+      "FIREBASE_AUTH_DOMAIN": "",
+      "FIREBASE_PROJECT_ID": "",
+      "FIREBASE_STORAGE_BUCKET": "",
+      "FIREBASE_MESSAGING_SENDER_ID": "",
+      "FIREBASE_APP_ID": "",
+      "FIREBASE_MEASUREMENT_ID": "",
+      "STRIPE_PUBLISHABLE_KEY": "",
+      "GOOGLE_MAPS_API_KEY": ""
+    }
+  }
+}
