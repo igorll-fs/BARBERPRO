@@ -42,9 +42,19 @@ export default function OwnerOnboardingScreen() {
   const [staffPhone, setStaffPhone] = useState('');
 
   const validateStep = () => {
-    if (step === 1 && (!shopName.trim() || !phone.trim())) {
-      Alert.alert('Atenção', 'Preencha nome e telefone da barbearia');
-      return false;
+    if (step === 1) {
+      if (!shopName.trim()) {
+        Alert.alert('Atenção', 'O nome da barbearia é obrigatório');
+        return false;
+      }
+      if (!address.trim()) {
+        Alert.alert('Atenção', 'O endereço é obrigatório para que os clientes possam encontrar sua barbearia');
+        return false;
+      }
+      if (!phone.trim()) {
+        Alert.alert('Atenção', 'O telefone da barbearia é obrigatório');
+        return false;
+      }
     }
     if (step === 2 && selectedServices.length === 0) {
       Alert.alert('Atenção', 'Selecione pelo menos 1 serviço');

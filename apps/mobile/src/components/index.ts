@@ -15,3 +15,4 @@ export { default as AppointmentCard } from './AppointmentCard';
 export { default as StatCard } from './StatCard';
 export { default as TabIcon } from './TabIcon';
 export { default as StoriesViewer } from './StoriesViewer';
+export { default as AddressCard } from './AddressCard';
