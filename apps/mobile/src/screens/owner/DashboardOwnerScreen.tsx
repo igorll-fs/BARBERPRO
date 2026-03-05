@@ -138,6 +138,7 @@ export default function DashboardOwnerScreen() {
             { icon: '💬', label: 'Chat', onPress: () => navigation.navigate('Chat', { shopId: shopId || 'demo', roomId: 'general', title: 'Chat' }) },
             { icon: '💳', label: 'Assinatura', onPress: () => navigation.navigate('OwnerPaywall') },
             { icon: '🎁', label: 'Promoções', onPress: () => navigation.navigate('PromotionsManagement') },
+            { icon: '📸', label: 'Stories', onPress: () => navigation.navigate('StoriesManagement') },
           ].map((action) => (
             <TouchableOpacity
               key={action.label}

@@ -14,3 +14,4 @@ export { default as ServiceCard } from './ServiceCard';
 export { default as AppointmentCard } from './AppointmentCard';
 export { default as StatCard } from './StatCard';
 export { default as TabIcon } from './TabIcon';
+export { default as StoriesViewer } from './StoriesViewer';

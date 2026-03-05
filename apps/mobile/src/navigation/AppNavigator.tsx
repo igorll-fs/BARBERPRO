@@ -27,6 +27,7 @@ import ServicesManagementScreen from '../screens/owner/ServicesManagementScreen'
 import ScheduleManagementScreen from '../screens/owner/ScheduleManagementScreen';
 import PromotionsManagementScreen from '../screens/owner/PromotionsManagementScreen';
 import InventoryManagementScreen from '../screens/owner/InventoryManagementScreen';
+import StoriesManagementScreen from '../screens/owner/StoriesManagementScreen';
 import TeamScreen from '../screens/owner/TeamScreen';
 import ReportsScreen from '../screens/owner/ReportsScreen';
 import SettingsScreen from '../screens/common/SettingsScreen';
@@ -132,6 +133,7 @@ export default function AppNavigator({ isAuthenticated, role }: { isAuthenticate
           <RStack.Screen name="ScheduleManagement" component={ScheduleManagementScreen} options={{ presentation: 'modal' }} />
           <RStack.Screen name="PromotionsManagement" component={PromotionsManagementScreen} options={{ presentation: 'modal' }} />
           <RStack.Screen name="InventoryManagement" component={InventoryManagementScreen} options={{ presentation: 'modal' }} />
+          <RStack.Screen name="StoriesManagement" component={StoriesManagementScreen} options={{ presentation: 'modal' }} />
           <RStack.Screen name="RateAppointment" component={RateAppointmentScreen} options={{ presentation: 'modal' }} />
           <RStack.Screen name="ReviewsList" component={ReviewsListScreen} options={{ presentation: 'modal' }} />
           <RStack.Screen name="ChatList" component={ChatListScreen} options={{ presentation: 'modal' }} />
