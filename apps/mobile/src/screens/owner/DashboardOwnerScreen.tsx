@@ -130,12 +130,14 @@ export default function DashboardOwnerScreen() {
         <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '600', marginBottom: spacing.md }}>
           Ações rápidas
         </Text>
-        <View style={{ flexDirection: 'row', gap: spacing.md, marginBottom: spacing.xxl }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginBottom: spacing.xxl }}>
           {[
             { icon: '➕', label: 'Agendar', onPress: () => navigation.navigate('Booking', { shopId: shopId || 'demo' }) },
             { icon: '⏰', label: 'Horários', onPress: () => navigation.navigate('ScheduleManagement') },
+            { icon: '📦', label: 'Estoque', onPress: () => navigation.navigate('InventoryManagement') },
             { icon: '💬', label: 'Chat', onPress: () => navigation.navigate('Chat', { shopId: shopId || 'demo', roomId: 'general', title: 'Chat' }) },
             { icon: '💳', label: 'Assinatura', onPress: () => navigation.navigate('OwnerPaywall') },
+            { icon: '🎁', label: 'Promoções', onPress: () => navigation.navigate('PromotionsManagement') },
           ].map((action) => (
             <TouchableOpacity
               key={action.label}

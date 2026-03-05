@@ -41,8 +41,7 @@ service cloud.firestore {
         allow create, update, delete: if isOwner(shopId) || isStaff(shopId);
       }
       match /inventory/{itemId} {
-        allow read: if isOwner(shopId) || isStaff(shopId);
-        allow write: if isOwner(shopId);
+        allow read, write: if isOwner(shopId);
       }
       match /promotions/{promoId} {
         allow read: if true;
