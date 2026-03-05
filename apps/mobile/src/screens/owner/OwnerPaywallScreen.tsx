@@ -19,24 +19,40 @@ export default function OwnerPaywallScreen() {
     getSubscriptionStatus(shopId).then(setStatus).catch(() => setStatus('inactive'));
   }, [shopId]);
 
+  // Conversão de moeda por país (simulado - em produção usar API de câmbio)
+  const getPricesByCountry = () => {
+    const country = 'BR'; // Detectar do usuário
+    const prices = {
+      BR: { currency: 'R$', monthly: '99,99', semiannual: '500,00', monthlyValue: 99.99, semiannualValue: 500 },
+      PT: { currency: '€', monthly: '18,99', semiannual: '95,00', monthlyValue: 18.99, semiannualValue: 95 },
+      US: { currency: 'US$', monthly: '19,99', semiannual: '99,00', monthlyValue: 19.99, semiannualValue: 99 },
+      ES: { currency: '€', monthly: '18,99', semiannual: '95,00', monthlyValue: 18.99, semiannualValue: 95 },
+      AR: { currency: 'ARS$', monthly: '8.999', semiannual: '44.999', monthlyValue: 8999, semiannualValue: 44999 },
+      MX: { currency: 'MX$', monthly: '399', semiannual: '1.999', monthlyValue: 399, semiannualValue: 1999 },
+    };
+    return prices[country as keyof typeof prices] || prices.BR;
+  };
+
+  const prices = getPricesByCountry();
+
   const plans = [
     { 
       mode: 'monthly' as const, 
       title: 'Mensal', 
-      price: 'R$ 99,99', 
+      price: `${prices.currency} ${prices.monthly}`, 
       period: '/mês', 
       badge: 'Mais popular',
-      features: ['Dashboard completo', 'Equipe ilimitada', 'Chat com clientes', 'Relatórios financeiros', 'Notificações push', 'Suporte prioritário'] 
+      features: ['Dashboard completo', 'Equipe ilimitada', 'Chat com clientes', 'Relatórios financeiros', 'Notificações push', 'Suporte prioritário'],
+      savings: null
     },
     { 
-      mode: 'quarterly' as const, 
-      title: 'Trimestral', 
-      price: 'R$ 79,99', 
-      period: '/mês', 
+      mode: 'semiannual' as const, 
+      title: 'Semestral', 
+      price: `${prices.currency} ${prices.semiannual}`, 
+      period: '/6 meses', 
       badge: '🔥 Melhor oferta',
-      originalPrice: 'R$ 99,99',
-      description: 'Cobrado a cada 3 meses: R$ 239,97',
-      features: ['Tudo do mensal', '7 dias grátis para testar', 'Economia de R$ 60', 'Prioridade no suporte', 'Recursos exclusivos'] 
+      features: ['Tudo do mensal', 'Economia de 2 meses', 'Prioridade máxima', 'Recursos exclusivos', 'Suporte VIP 24h'],
+      savings: `Economize ${prices.currency} ${((prices.monthlyValue * 6) - prices.semiannualValue).toFixed(2).replace('.', ',')}`
     },
   ];
 
@@ -65,36 +81,36 @@ export default function OwnerPaywallScreen() {
 
         {/* Planos */}
         {plans.map((plan) => (
-          <AppCard key={plan.mode} style={{ marginBottom: spacing.lg, ...shadows.md, borderWidth: 2, borderColor: plan.mode === 'quarterly' ? colors.primary : colors.borderLight }}>
+          <AppCard key={plan.mode} style={{ marginBottom: spacing.lg, ...shadows.md, borderWidth: 2, borderColor: plan.mode === 'semiannual' ? colors.primary : colors.borderLight }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.md }}>
               <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '700' }}>{plan.title}</Text>
-              {plan.badge && <Badge text={plan.badge} variant={plan.mode === 'quarterly' ? 'primary' : 'success'} size="sm" />}
+              {plan.badge && <Badge text={plan.badge} variant={plan.mode === 'semiannual' ? 'primary' : 'success'} size="sm" />}
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'baseline', marginBottom: spacing.xs }}>
               <Text style={{ color: colors.primary, fontSize: 36, fontWeight: '800' }}>{plan.price}</Text>
               <Text style={{ color: colors.textSecondary, fontSize: fontSize.md, marginLeft: spacing.xs }}>{plan.period}</Text>
             </View>
-            {plan.originalPrice && (
-              <Text style={{ color: colors.textSecondary, fontSize: fontSize.sm, textDecorationLine: 'line-through', marginBottom: spacing.xs }}>
-                De {plan.originalPrice}/mês
-              </Text>
-            )}
-            {plan.description && (
+            {plan.savings && (
               <Text style={{ color: colors.success, fontSize: fontSize.sm, fontWeight: '600', marginBottom: spacing.md }}>
-                {plan.description}
+                💰 {plan.savings}
               </Text>
             )}
             {plan.features.map((f) => (
               <Text key={f} style={{ color: colors.textSecondary, fontSize: fontSize.md, marginBottom: 4 }}>✓ {f}</Text>
             ))}
             <AppButton
-              title={plan.mode === 'quarterly' ? 'Começar 7 dias grátis' : `Assinar ${plan.title}`}
+              title={`Assinar ${plan.title}`}
               onPress={() => shopId && openCheckout(shopId, plan.mode)}
-              variant={plan.mode === 'quarterly' ? 'primary' : 'outline'}
+              variant={plan.mode === 'semiannual' ? 'primary' : 'outline'}
               style={{ marginTop: spacing.lg }}
             />
           </AppCard>
         ))}
+
+        {/* Política de preços por país */}
+        <Text style={{ fontSize: fontSize.xs, color: colors.textMuted, textAlign: 'center', marginTop: spacing.md }}>
+          💱 Preços convertidos automaticamente para sua moeda local
+        </Text>
 
         {/* Gerenciar */}
         {status === 'active' && (
